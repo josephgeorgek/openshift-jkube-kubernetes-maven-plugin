@@ -1,0 +1,52 @@
+==  SpringBoot 2 sample application that can be deployed on OpenShift
+
+Zero configuration; In case you want to customize generated resources you can do it via:
+
+    Plugin XML configuration
+    external resource fragments
+    Dockerfiles
+    
+    
+http://localhost:8080/add/1/1
+http://localhost:8080/list
+
+ mvn oc:deploy
+ 
+ mvn oc:undeploy
+ 
+ 
+ Eclipse JKube is a set of tools which Java developers can use to build and deploy their applications on Kubernetes/OpenShift. We have two separate plugins for Kubernetes and OpenShift which are focused towards java development on these platforms:
+  
+The openshift-maven-plugin is your best friend to bring your Java applications on to OpenShift. It provides a tight integration into Maven and benefits from the build configuration already provided. 
+
+This plugin focus on building Docker images and creating Kubernetes resource descriptors. It ships with a flexible configuration and supports multiple models for creating resources such as a Zero-Config setup which allows for a quick ramp-up with some opinionated defaults.
+
+   <plugin>
+            <groupId>org.eclipse.jkube</groupId>
+            <artifactId>openshift-maven-plugin</artifactId>
+            <version>1.0.0-alpha-1</version>
+  
+      <plugin>
+                <groupId>org.eclipse.jkube</groupId>
+                <artifactId>kubernetes-maven-plugin</artifactId>
+                 <version>1.0.0-alpha-1</version>
+            </plugin>
+            
+            
+ kubernetes-maven-plugin           
+ In order to make docker image of your project, you just need to run command:
+
+
+
+    mvn k8s:build
+    
+    
+In order to generate Kubernetes/Openshift artifacts, just run the resource goal:
+
+    mvn k8s:resource
+    
+If you check your target directory you can see the generated artifacts in target/classes/META-INF/jkube/ directory
+    
+TO deploying your application is just about applying those generates resources onto the cluster. You just need to do:
+
+    mvn k8s:apply
